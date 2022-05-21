@@ -20,17 +20,16 @@ public class Button extends Component {
 	public Frame parent;
 	public int offset;
 	private boolean isHovered;
-	private ArrayList<Component> subcomponents;
+	private final ArrayList<Component> subcomponents;
 	public boolean open;
-	private int height;
-	
+
 	public Button(Module mod, Frame parent, int offset) {
 		this.mod = mod;
 		this.parent = parent;
 		this.offset = offset;
 		this.subcomponents = new ArrayList<>();
 		this.open = false;
-		height = 12;
+		int height = 12;
 		int opY = offset + 12;
 		if(!mod.getSettings().isEmpty()) {
 			for(Setting<?> s : mod.getSettings()){
@@ -73,7 +72,6 @@ public class Button extends Component {
 			MinecraftClient.getInstance().textRenderer.drawWithShadow(RcClickGui.matrix, this.open ? "-" : "+", (parent.getX() + parent.getWidth() - 10) * 2, (parent.getY() + offset + 2) * 2 + 4, -1);
 		}
 		if (this.isHovered) {
-			DrawableHelper.fill(RcClickGui.matrix,parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset, 0xFF111111);
 			MinecraftClient.getInstance().textRenderer.drawWithShadow(RcClickGui.matrix, mod.getDescription(), ((parent.getX() + parent.getWidth() - 10) * 2)+25, ((parent.getY() + offset + 2) * 2) + 25, 0xFF0000);
 		}
 		modelview.pop();
@@ -135,9 +133,6 @@ public class Button extends Component {
 	}
 	
 	public boolean isMouseOnButton(int x, int y) {
-		if(x > parent.getX() && x < parent.getX() + parent.getWidth() && y > this.parent.getY() + this.offset && y < this.parent.getY() + 12 + this.offset) {
-			return true;
-		}
-		return false;
+		return x > parent.getX() && x < parent.getX() + parent.getWidth() && y > this.parent.getY() + this.offset && y < this.parent.getY() + 12 + this.offset;
 	}
 }
